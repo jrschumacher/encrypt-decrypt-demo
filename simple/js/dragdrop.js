@@ -55,6 +55,7 @@ function processFile(fileOb, completion){
     try{
         await encryptOrDecryptFile(reader.result, filename, shouldEncrypt, getUser(), completion, isHtmlProtocol());
     }catch(e){
+      console.error(e);
         if(!shouldEncrypt){
             alert('An error occurred attempting to decrypt this file. Please be sure you have access to do so.'); 
         }else{
@@ -499,5 +500,19 @@ function init(){
   setupFileInputs();
 }
 
-init();
+window.addEventListener('DOMContentLoaded', function initalize() {
+  const maxTries = 10;
+  const timeout = 100;
+  let tries = 0;
+  function checkOnVirtru() {
+    if (window.Virtru && window.Virtru.OAuth) {
+      init();
+    } else if (tries++ < maxTries) {
+      setTimeout(checkOnVirtru, timeout);
+    } else {
+      alert('Virtru was not initalized');
+    }
+  }
+  checkOnVirtru();
+});
 
