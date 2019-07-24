@@ -501,7 +501,7 @@ function init(){
 }
 
 window.addEventListener('DOMContentLoaded', function initalize() {
-  const maxTries = 10;
+  const maxTries = 100;
   const timeout = 100;
   let tries = 0;
   function checkOnVirtru() {
